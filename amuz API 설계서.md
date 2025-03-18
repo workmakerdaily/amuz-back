@@ -740,6 +740,18 @@ Content-Type: application/json;charset=UTF-8
 
 ```
 
+**응답 : 실패 (존재하지 않는 To Do)**
+```bash
+HTTP/1.1 400 BAD_REQUEST
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NET",
+  "message": "No exist to do."
+}
+
+```
+
 **응답 : 실패 (인증 실패)**
 ```bash
 HTTP/1.1 401 Unauthorized

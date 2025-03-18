@@ -1,8 +1,6 @@
 package amuz.todo_back.service.Implement;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -167,8 +165,8 @@ public class ToDoServiceImplement implements ToDoService {
     public ResponseEntity<ResponseDto> patchToDoPriority(String userId, PatchToDoPriorityRequestDto dto) {
     
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
+
             if (userEntity == null) {
                 return ResponseDto.noExistUserId();
             }
@@ -183,6 +181,10 @@ public class ToDoServiceImplement implements ToDoService {
 
             List<Integer> orderedIds = dto.getPriorityIds();
             List<ToDoEntity> toDoEntities = toDoRepository.findAllById(orderedIds);
+
+            if (toDoEntities.size() != orderedIds.size()) {
+                return ResponseDto.noExistToDo();
+            }
 
             for (int i = 0; i < orderedIds.size(); i++) {
                 Integer id = orderedIds.get(i);
