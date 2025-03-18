@@ -1,7 +1,5 @@
 package amuz.todo_back.service;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import amuz.todo_back.dto.request.todo.PatchToDoIsCheckedRequestDto;
@@ -21,4 +19,6 @@ public interface ToDoService {
     ResponseEntity<ResponseDto> patchToDoPriority(String userId, PatchToDoPriorityRequestDto dto);
 
     ResponseEntity<ResponseDto> deleteToDo(Integer id, String userId);
+
+    ResponseEntity<ResponseDto> resetIsChecked();
 }

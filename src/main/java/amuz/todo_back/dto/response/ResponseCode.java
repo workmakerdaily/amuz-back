@@ -10,6 +10,7 @@ public interface ResponseCode {
     String SIGN_IN_FAIL = "SF";
     String NO_EXIST_USER_ID = "NI";
     String NO_EXIST_TO_DO = "NET";
+    String NO_EXIST_DATA = "NED";
     String NO_PERMISSION = "NP";
     String TOKEN_CREATE_FAIL = "TCF";
 }

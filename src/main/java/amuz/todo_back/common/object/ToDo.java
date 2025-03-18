@@ -14,6 +14,7 @@ public class ToDo {
     private String goal;
     private Boolean isChecked;
     private Integer priority;
+    private String checkedDate;
 
     public ToDo(ToDoEntity toDoEntity) {
 
@@ -22,6 +23,7 @@ public class ToDo {
         this.goal = toDoEntity.getGoal();
         this.isChecked = toDoEntity.getIsChecked();
         this.priority = toDoEntity.getPriority();
+        this.checkedDate = toDoEntity.getCheckedDate();
 
     }
 

@@ -38,6 +38,11 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
 
+    public static ResponseEntity<ResponseDto> noExistData() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_DATA, ResponseMessage.NO_EXIST_DATA);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
+    }
+
     public static ResponseEntity<ResponseDto> noPermission() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NO_PERMISSION, ResponseMessage.NO_PERMISSION);
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseBody);
