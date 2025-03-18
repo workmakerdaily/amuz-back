@@ -74,17 +74,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
 **응답 실패 (로그인 정보 불일치)**
 ```bash
 HTTP/1.1 401 Unauthorized
@@ -172,17 +161,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
 **응답 : 실패 (중복된 아이디)**
 ```bash
 HTTP/1.1 400 Bad Request
@@ -263,16 +241,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
 
 **응답 : 실패 (중복된 아이디)**
 ```bash
@@ -494,17 +462,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
 **응답 : 실패 (인증 실패)**
 ```bash
 HTTP/1.1 401 Unauthorized
@@ -526,6 +483,125 @@ Content-Type: application/json;charset=UTF-8
   "message": "Database error."
 }
 ```
+
+***
+
+#### - To Do 수정하기
+  
+##### 설명
+
+클라이언트는 요청 헤더에 Bearer 인증 토큰을 포함하여 요청하고 조회가 성공적으로 이루어지면 성공에 대한 응답을 받습니다. 네트워크 에러, 서버 에러, 유효성 실패, 인증 실패, 데이터베이스 에러가 발생할 수 있습니다.  
+
+- method : **Patch**  
+- URL : **/{id}**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | Bearer 토큰 인증 헤더 | O |
+
+###### Request Body
+  
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| goal | String | 목표 | O |
+
+###### Example
+
+```bash
+curl -v -X PATCH "http://localhost:4000/api/v1/todo/1" \
+ -h "Authorization=Bearer XXXX" \
+ -d "goal=식단 조절하기" \
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 코드에 대한 설명 | O |
+  
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "SU",
+  "message": "Success.",
+}
+```
+
+**응답 : 실패 (존재하지 않는 사용자)**
+```bash
+HTTP/1.1 400 BAD_REQUEST
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NI",
+  "message": "No exist user id."
+}
+
+```
+
+**응답 : 실패 (존재하지 않는 To Do)**
+```bash
+HTTP/1.1 400 BAD_REQUEST
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NET",
+  "message": "No exist to do."
+}
+
+```
+
+**응답 : 실패 (인증 실패)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "AF",
+  "message": "Authentication fail."
+}
+```
+
+**응답 : 실패 (권한 없음)**
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NP",
+  "message": "No Permission"
+}
+```
+
+**응답 실패 (데이터베이스 에러)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "DBE",
+  "message": "Database error."
+}
+```
+
 ***
 
 #### - To Do 완료 여부 수정하기
@@ -587,17 +663,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
 **응답 : 실패 (존재하지 않는 사용자)**
 ```bash
 HTTP/1.1 400 BAD_REQUEST
@@ -654,7 +719,9 @@ Content-Type: application/json;charset=UTF-8
   "message": "Database error."
 }
 ```
+
 ***
+
 #### - To Do 우선순위 바꾸기
   
 ##### 설명
@@ -714,17 +781,6 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-}
-```
-
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
 }
 ```
 
@@ -863,17 +919,6 @@ Content-Type: application/json;charset=UTF-8
 
 ```
 
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
 **응답 : 실패 (인증 실패)**
 ```bash
 HTTP/1.1 401 Unauthorized
@@ -979,17 +1024,6 @@ Content-Type: application/json;charset=UTF-8
     }
     ...
   ]
-}
-```
-
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
 }
 ```
 

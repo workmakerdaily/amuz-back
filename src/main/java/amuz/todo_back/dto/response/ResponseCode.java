@@ -3,6 +3,7 @@ package amuz.todo_back.dto.response;
 public interface ResponseCode {
 
     String SUCCESS = "SU";
+    String VALIDATION_FAIL = "VF";
     String DATABASE_ERROR = "DBE";
 
     String AUTHENTICATION_FAIL = "AF";

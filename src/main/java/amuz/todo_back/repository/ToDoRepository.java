@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface ToDoRepository extends JpaRepository<ToDoEntity, Integer> {
     
-    List<ToDoEntity> findByUserIdOrderByPriorityAsc(String userId);
+    List<ToDoEntity> findByUserIdOrderByPriority(String userId);
 
     @Query("SELECT COALESCE(MAX(t.priority), 0) FROM to_do_lists t WHERE t.userId = :userId")
     int findMaxPriorityByUserId(@Param("userId") String userId);

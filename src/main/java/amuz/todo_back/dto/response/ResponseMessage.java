@@ -3,6 +3,7 @@ package amuz.todo_back.dto.response;
 public interface ResponseMessage {
 
     String SUCCESS = "Success.";
+    String VALIDATION_FAIL = "Validation failed.";
     String DATABASE_ERROR = "Database error.";
 
     String AUTHENTICATION_FAIL = "Authentication failed.";

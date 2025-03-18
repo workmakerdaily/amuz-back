@@ -81,6 +81,8 @@ public class WebSecurityConfig {
                         authException.printStackTrace();
                         response.setContentType("application/json");
                         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                        response.setContentType("application/json");
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                         response.getWriter()
                                         .write("{ \"code\": \"" + ResponseCode.AUTHENTICATION_FAIL
                                                         + "\", \"message\": \""

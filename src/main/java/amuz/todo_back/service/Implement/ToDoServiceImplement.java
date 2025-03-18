@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import amuz.todo_back.dto.request.todo.PatchToDoIsCheckedRequestDto;
 import amuz.todo_back.dto.request.todo.PatchToDoPriorityRequestDto;
+import amuz.todo_back.dto.request.todo.PatchToDoRequestDto;
 import amuz.todo_back.dto.request.todo.PostToDoRequestDto;
 import amuz.todo_back.dto.response.ResponseDto;
 import amuz.todo_back.dto.response.todo.GetToDoListResponseDto;
@@ -40,6 +41,10 @@ public class ToDoServiceImplement implements ToDoService {
         try {
 
         ToDoEntity toDoEntity = new ToDoEntity(dto);
+
+        if (dto.getGoal() == null) {
+            return ResponseDto.validationFail();
+        }
 
         UserEntity userEntity = userRepository.findByUserId(userId);
         if (userEntity == null) 
@@ -71,7 +76,7 @@ public class ToDoServiceImplement implements ToDoService {
 
         try {
 
-            toDoEntities = toDoRepository.findByUserIdOrderByPriorityAsc(userId);
+            toDoEntities = toDoRepository.findByUserIdOrderByPriority(userId);
 
         } catch (Exception exception) {
 
@@ -80,6 +85,42 @@ public class ToDoServiceImplement implements ToDoService {
 
         }
         return GetToDoListResponseDto.success(toDoEntities);
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> patchToDo(Integer id, String userId, PatchToDoRequestDto dto) {
+        try {
+
+            Optional<ToDoEntity> optionalToDo = toDoRepository.findById(id);
+            UserEntity userEntity = userRepository.findByUserId(userId);
+
+            if (optionalToDo.isEmpty()) {
+                return ResponseDto.noExistToDo();
+            }
+
+            if (userEntity == null) {
+                return ResponseDto.noExistUserId();
+            }
+
+            if (!userEntity.getUserId().equals(userId)) {
+                return ResponseDto.noPermission();
+            }
+            ToDoEntity toDoEntity = optionalToDo.get();
+            String patchToDo = dto.getGoal();
+
+            Integer PriorityDesc = toDoEntity.getPriority();
+            
+            toDoEntity.setGoal(patchToDo);
+            toDoEntity.setPriority(PriorityDesc);
+
+            toDoRepository.save(toDoEntity);
+
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return ResponseDto.success();
     }
 
     @Override
@@ -217,5 +258,5 @@ public class ToDoServiceImplement implements ToDoService {
         }
         return ResponseDto.success();
     }
-    
+
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import amuz.todo_back.dto.request.todo.PatchToDoIsCheckedRequestDto;
 import amuz.todo_back.dto.request.todo.PatchToDoPriorityRequestDto;
+import amuz.todo_back.dto.request.todo.PatchToDoRequestDto;
 import amuz.todo_back.dto.request.todo.PostToDoRequestDto;
 import amuz.todo_back.dto.response.ResponseDto;
 import amuz.todo_back.dto.response.todo.GetToDoListResponseDto;
@@ -41,6 +42,16 @@ public class ToDoController {
         @AuthenticationPrincipal String userId
     ) {
         ResponseEntity<? super GetToDoListResponseDto> response = toDoService.getToDoList(userId);
+        return response;
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ResponseDto> patchToDo(
+        @PathVariable("id") Integer id,
+        @AuthenticationPrincipal String userId,
+        @RequestBody @Valid PatchToDoRequestDto request
+    ) {
+        ResponseEntity<ResponseDto> response = toDoService.patchToDo(id, userId, request);
         return response;
     }
 
